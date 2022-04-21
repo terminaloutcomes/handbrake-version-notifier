@@ -1,6 +1,6 @@
 certifi==2020.12.5
 chardet==4.0.0
-idna==2.10
+idna==3.3
 loguru==0.6.0
 requests==2.27.1
 semver==3.0.0.dev2
