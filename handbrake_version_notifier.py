@@ -1,24 +1,24 @@
-#!/usr/bin/env python3
+""" checks for new versions of handbrake """
 
 import os
 import sys
+from typing import Any, Dict
+
 import requests
-from semver import Version
-
-os.environ['LOGURU_LEVEL'] = "INFO"
+from semver import Version # type: ignore
 from loguru import logger
-
 
 URL = "https://api.github.com/repos/Handbrake/Handbrake/releases"
 
-RUNNING_IN_AWS = True if os.getenv('AWS_EXECUTION_ENV', False) else False
+RUNNING_IN_AWS = bool(os.getenv('AWS_EXECUTION_ENV'))
 
 logger.debug(f"Running in AWS? {RUNNING_IN_AWS}")
 if os.getenv('LAST_SEEN'):
-    LAST_SEEN = Version.parse(os.getenv('LAST_SEEN'))
+    LAST_SEEN = Version.parse(os.environ['LAST_SEEN'])
     LAST_SOURCE = "env"
 elif os.path.exists('lastseen.txt'):
-    LAST_SEEN = Version.parse(open('lastseen.txt', 'r').read().strip())
+    with open('lastseen.txt', encoding="utf-8") as file_handle:
+        LAST_SEEN = Version.parse(file_handle.read().strip())
     LAST_SOURCE = "disk"
 else:
     logger.debug("No last_seen set, will need to write one")
@@ -28,13 +28,14 @@ else:
 try:
     response = requests.get(url=URL)
     response.raise_for_status()
-except Exception as error_message:
+except Exception as error_message: # pylint: disable=broad-except
     logger.error(f"Request failed: {error_message}")
     sys.exit()
 data = response.json()
 
-def semver_key_sort(value):
-    parsed = Version.parse(value.get('tag_name'))
+def semver_key_sort(value: Dict[str, Any]) -> Version:
+    """ sorting function """
+    parsed = Version.parse(str(value.get('tag_name')))
     return parsed
 
 
@@ -53,8 +54,7 @@ for item in sorted(data, key=semver_key_sort, reverse=True):
         LAST_SEEN = version.to_tuple()
         logger.info(f"New version found: {item.get('tag_name')}")
         if LAST_SOURCE in ('default', 'disk'):
-            with open('lastseen.txt', "w") as fh:
-                fh.write(item.get("tag_name"))
+            with open('lastseen.txt', "w", encoding="utf-8") as file_handle:
+                file_handle.write(item.get("tag_name"))
         else:
-            os.env['LAST_SEEN'] = item.get("tag_name")
-
+            os.environ['LAST_SEEN'] = item.get("tag_name")
