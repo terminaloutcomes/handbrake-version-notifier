@@ -3,5 +3,5 @@ chardet==4.0.0
 idna==2.10
 loguru==0.6.0
 requests==2.27.1
-semver==3.0.0.dev2
+semver==3.0.0.dev3
 urllib3==1.26.3
