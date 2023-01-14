@@ -45,7 +45,7 @@ def cli(debug: bool=False) -> None:
     last_seen, last_source = get_last_vals()
 
     try:
-        response = requests.get(url=URL)
+        response = requests.get(url=URL, timeout=30)
         response.raise_for_status()
     except Exception as error_message: # pylint: disable=broad-except
         logger.error(f"Request failed: {error_message}")
