@@ -14,7 +14,7 @@ click = "^8.1.7"
 
 [tool.poetry.dev-dependencies]
 types-requests = "^2.32.0"
-pylint = "^3.2.2"
+pylint = "^3.2.3"
 pytest = "^8.2.2"
 black = "^24.4.2"
 mypy = "^1.10"
