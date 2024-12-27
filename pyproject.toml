@@ -10,7 +10,7 @@ python = "^3.10"
 requests = "^2.32.3"
 semver = "^3.0.2"
 loguru = "^0.7.3"
-click = "^8.1.7"
+click = "^8.1.8"
 
 [tool.poetry.dev-dependencies]
 types-requests = "^2.32.0"
