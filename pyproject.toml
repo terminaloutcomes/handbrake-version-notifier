@@ -16,7 +16,7 @@ click = "^8.3.0"
 types-requests = "^2.32.4"
 pylint = "^4.0.3"
 pytest = "^9.0.1"
-black = "^25.9.0"
+black = "^25.11.0"
 mypy = "^1.18"
 
 [build-system]
