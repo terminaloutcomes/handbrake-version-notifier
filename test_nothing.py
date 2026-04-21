@@ -1,4 +1,4 @@
-""" tests nothing, makes pytest happy """
+"""tests nothing, makes pytest happy"""
 
 
 def test_nothing() -> None:
