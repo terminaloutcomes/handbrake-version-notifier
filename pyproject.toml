@@ -16,7 +16,7 @@ dev = [
     "pylint>=4.0.5",
     "pytest>=9.0.3",
     "ty>=0.0.34",
-    "types-requests>=2.33.0.20260508",
+    "types-requests>=2.33.0.20260513",
 ]
 
 [tool.uv]
